@@ -281,6 +281,23 @@ p {
   margin-top: 8px;
 }
 
+/* ---------- Confirm dialog ---------- */
+.confirm-dialog .modal-panel {
+  width: min(440px, 100%);
+}
+.confirm-body {
+  padding: 22px 28px 26px;
+}
+.confirm-body p {
+  margin: 0 0 22px;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--c-ink);
+}
+.confirm-body p:empty {
+  display: none;
+}
+
 /* ---------- Toast ---------- */
 .toast {
   position: fixed;

@@ -2,17 +2,31 @@
 /**
  * Overlays.astro · Toast y diálogo de confirmación.
  * IDs: #toast, #confirmDialog, #confirmMsg.
+ *
+ * El diálogo usa el mismo patrón `.modal` + `.modal-panel` que el resto del
+ * panel. Se abre/cierra alternando la clase `.is-open` desde el shell.
  */
 ---
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-<dialog id="confirmDialog" class="confirm-dialog" aria-labelledby="confirmMsg">
-  <div class="confirm-dialog-body">
-    <h3 id="confirmTitle">¿Confirmas esta acción?</h3>
-    <p id="confirmMsg">—</p>
+<div class="modal confirm-dialog" id="confirmDialog" aria-hidden="true" role="alertdialog" aria-labelledby="confirmTitle" aria-describedby="confirmMsg">
+  <div class="modal-backdrop" data-confirm-cancel></div>
+  <div class="modal-panel" role="document">
+    <header class="modal-head">
+      <div>
+        <span class="eyebrow">Confirmación</span>
+        <h3 id="confirmTitle">¿Confirmas esta acción?</h3>
+      </div>
+      <button class="icon-btn" data-confirm-cancel type="button" aria-label="Cerrar">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </header>
+    <div class="form confirm-body">
+      <p id="confirmMsg">—</p>
+      <div class="form-actions">
+        <button type="button" class="btn btn-ghost" data-confirm-cancel>Cancelar</button>
+        <button type="button" class="btn btn-danger" data-confirm-ok>Confirmar</button>
+      </div>
+    </div>
   </div>
-  <div class="confirm-dialog-actions">
-    <button type="button" class="btn btn-ghost btn-sm" data-confirm-cancel>Cancelar</button>
-    <button type="button" class="btn btn-danger btn-sm" data-confirm-ok>Confirmar</button>
-  </div>
-</dialog>
+</div>

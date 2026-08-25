@@ -16,12 +16,12 @@ export function showToast(message: string, type: '' | 'success' | 'error' = ''):
 }
 
 /**
- * Diálogo de confirmación con HTML nativo. Devuelve una promesa.
- * El nodo debe existir con id="confirmDialog".
+ * Diálogo de confirmación con el mismo patrón `.modal` del panel.
+ * Devuelve una promesa. El nodo debe existir con id="confirmDialog".
  */
 export function confirmAction(message: string): Promise<boolean> {
   return new Promise((resolve) => {
-    const dlg = $('#confirmDialog') as HTMLDialogElement | null;
+    const dlg = $('#confirmDialog');
     if (!dlg) {
       // Fallback si no hay diálogo: usar confirm nativo
       resolve(window.confirm(message));
@@ -29,28 +29,26 @@ export function confirmAction(message: string): Promise<boolean> {
     }
     const msg = $('#confirmMsg', dlg);
     const okBtn = $('[data-confirm-ok]', dlg) as HTMLButtonElement | null;
-    const cancelBtn = $('[data-confirm-cancel]', dlg) as HTMLButtonElement | null;
+    const cancelBtns = $$('[data-confirm-cancel]', dlg);
     if (msg) msg.textContent = message;
+    dlg.setAttribute('aria-hidden', 'false');
+    dlg.classList.add('is-open');
 
-    const close = (value: boolean) => {
-      dlg.removeEventListener('close', onClose);
+    const cleanup = () => {
       okBtn?.removeEventListener('click', onOk);
-      cancelBtn?.removeEventListener('click', onCancel);
-      dlg.close();
+      cancelBtns.forEach((b) => b.removeEventListener('click', onCancel));
+    };
+    const close = (value: boolean) => {
+      cleanup();
+      dlg.classList.remove('is-open');
+      dlg.setAttribute('aria-hidden', 'true');
       resolve(value);
     };
-    const onClose = () => resolve(false);
     const onOk = () => close(true);
     const onCancel = () => close(false);
 
-    dlg.addEventListener('close', onClose);
     okBtn?.addEventListener('click', onOk);
-    cancelBtn?.addEventListener('click', onCancel);
-    if (typeof dlg.showModal === 'function') dlg.showModal();
-    else {
-      // Fallback navegadores sin <dialog>
-      resolve(window.confirm(message));
-    }
+    cancelBtns.forEach((b) => b.addEventListener('click', onCancel));
   });
 }
 
