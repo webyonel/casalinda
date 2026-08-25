@@ -23,18 +23,6 @@ export function formatCategoria(slug: string | null | undefined): string {
   return map[slug] ?? slug;
 }
 
-/** Etiqueta legible para el estado de un pedido. */
-export function formatEstado(estado: string): string {
-  const map: Record<string, string> = {
-    nuevo: 'Nuevo',
-    en_preparacion: 'En preparación',
-    enviado: 'Enviado',
-    entregado: 'Entregado',
-    cancelado: 'Cancelado',
-  };
-  return map[estado] ?? estado;
-}
-
 /** "2026-08-25 14:30" en local. */
 export function formatDate(iso: string): string {
   const d = new Date(iso);

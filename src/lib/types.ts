@@ -35,33 +35,6 @@ export interface Producto {
   updated_at: string;
 }
 
-export type EstadoPedido =
-  | 'nuevo'
-  | 'en_preparacion'
-  | 'enviado'
-  | 'entregado'
-  | 'cancelado';
-
-export interface Pedido {
-  id: string;
-  created_at: string;
-  cliente_nombre: string;
-  cliente_telefono: string;
-  direccion: string | null;
-  total: number;
-  estado: EstadoPedido;
-  payload: unknown | null;
-}
-
-export interface PedidoItem {
-  id: string;
-  pedido_id: string;
-  producto_id: string | null;
-  cantidad: number;
-  precio_unitario: number;
-  nombre_snapshot: string | null;
-}
-
 /** Resultado uniforme para mutaciones: éxito con dato opcional o error legible. */
 export type Result<T = void> =
   | { ok: true; data?: T }
