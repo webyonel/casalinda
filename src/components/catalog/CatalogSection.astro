@@ -1,0 +1,39 @@
+---
+/**
+ * CatalogSection.astro · Catálogo: cabecera, buscador, filtros, grid.
+ * El grid se rellena por JS (src/lib/catalog.ts) tras fetch a Supabase.
+ */
+---
+<section class="catalog" id="catalogo">
+  <div class="container">
+    <div class="catalog-head">
+      <span class="eyebrow">Nuestro catálogo</span>
+      <h2>Selección curada para tu hogar</h2>
+    </div>
+
+    <div class="search">
+      <svg class="search-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="11" cy="11" r="7"/>
+        <path d="m20 20-3.5-3.5"/>
+      </svg>
+      <input type="text" id="searchInput" placeholder="Buscar productos…" aria-label="Buscar productos" autocomplete="off" />
+      <button class="search-clear" id="searchClear" type="button" hidden aria-label="Limpiar búsqueda">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+
+    <div class="filters" role="tablist" aria-label="Categorías" id="categoryFilters">
+      <button class="filter is-active" data-cat="todo" role="tab" aria-selected="true">Todo</button>
+      <button class="filter" data-cat="cocina" role="tab" aria-selected="false">Cocina</button>
+      <button class="filter" data-cat="bano" role="tab" aria-selected="false">Baño</button>
+      <button class="filter" data-cat="cuarto" role="tab" aria-selected="false">Cuarto</button>
+      <button class="filter" data-cat="sala" role="tab" aria-selected="false">Sala</button>
+      <button class="filter" data-cat="iluminarias" role="tab" aria-selected="false">Iluminarias y Espejos</button>
+      <button class="filter" data-cat="decoraciones" role="tab" aria-selected="false">Decoraciones y Otros</button>
+    </div>
+
+    <div class="grid" id="grid" aria-live="polite"></div>
+
+    <p class="empty-msg" id="emptyMsg" hidden>No hay productos en esta categoría por el momento.</p>
+  </div>
+</section>

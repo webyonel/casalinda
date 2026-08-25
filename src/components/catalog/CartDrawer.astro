@@ -1,0 +1,28 @@
+---
+/**
+ * CartDrawer.astro · Panel lateral con los productos seleccionados.
+ */
+---
+<div class="drawer" id="drawer" aria-hidden="true" role="dialog" aria-label="Tu pedido">
+  <div class="drawer-backdrop" data-close></div>
+  <aside class="drawer-panel">
+    <header class="drawer-head">
+      <div>
+        <span class="eyebrow">Tu pedido</span>
+        <h3>Selección actual</h3>
+      </div>
+      <button class="icon-btn" data-close aria-label="Cerrar">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </header>
+    <div class="drawer-body" id="drawerBody"></div>
+    <footer class="drawer-foot">
+      <div class="drawer-total">
+        <span>Total estimado</span>
+        <strong id="drawerTotal">$0.00 CUP</strong>
+      </div>
+      <button class="btn btn-primary btn-block" id="goCheckout">Continuar con el envío</button>
+      <p class="muted small">Envío a coordinar con Casa Linda tras confirmar por WhatsApp.</p>
+    </footer>
+  </aside>
+</div>

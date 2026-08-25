@@ -1,0 +1,33 @@
+---
+/**
+ * AdminLogin.astro · Vista de login (email + contraseña)
+ * IDs esperados por el shell: #loginView, #loginForm, #loginEmail, #loginPass, #loginSubmit
+ */
+---
+<div id="loginView" class="auth-wrap">
+  <div class="auth-card">
+    <div class="auth-brand">
+      <img src="/logo-dorado.png" alt="Casa Linda" class="auth-mark" />
+      <span class="auth-name">Casa Linda</span>
+      <span class="auth-tag">Panel de administración</span>
+    </div>
+
+    <form id="loginForm" class="auth-form" novalidate>
+      <label class="field">
+        <span>Email</span>
+        <input type="email" id="loginEmail" required autocomplete="email" placeholder="tu@correo.com" />
+        <small class="field-error" data-error-for="email"></small>
+      </label>
+
+      <label class="field">
+        <span>Contraseña</span>
+        <input type="password" id="loginPass" required autocomplete="current-password" placeholder="••••••••" minlength="4" />
+        <small class="field-error" data-error-for="pass"></small>
+      </label>
+
+      <button type="submit" id="loginSubmit" class="btn btn-primary btn-block">Entrar al panel</button>
+    </form>
+
+    <p class="auth-hint">Acceso restringido · Solo personal autorizado</p>
+  </div>
+</div>

@@ -1,0 +1,683 @@
+/* =====================================================
+   Casa Linda · Admin (login, header, form, grid, cards)
+   Requiere tokens.css y base.css cargados previamente.
+   ===================================================== */
+
+[hidden] {
+  display: none !important;
+}
+
+/* ---------- Auth (login) ---------- */
+.auth-wrap {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 24px;
+  background:
+    radial-gradient(900px 500px at 80% -10%, rgba(216, 151, 42, 0.1), transparent 60%),
+    radial-gradient(700px 500px at 0% 100%, rgba(61, 63, 139, 0.1), transparent 60%),
+    var(--c-bg);
+}
+.auth-card {
+  width: 100%;
+  max-width: 440px;
+  background: var(--c-surface);
+  border: 1px solid var(--c-border-soft);
+  border-radius: var(--radius-lg);
+  padding: 40px 36px 32px;
+  box-shadow: var(--shadow-lg);
+}
+.auth-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 28px;
+}
+.auth-mark {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  margin-bottom: 16px;
+  background: var(--c-surface);
+  border-radius: var(--radius-md);
+  padding: 4px;
+  box-shadow: var(--shadow-sm);
+}
+.auth-name {
+  font-family: var(--f-serif);
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--c-primary);
+  letter-spacing: -0.01em;
+  line-height: 1;
+}
+.auth-tag {
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--c-gold-dark);
+  margin-top: 8px;
+  font-weight: 500;
+}
+.auth-form {
+  display: flex;
+  flex-direction: column;
+}
+.auth-form .btn-primary {
+  margin-top: 8px;
+}
+.auth-hint {
+  margin-top: 24px;
+  text-align: center;
+  font-size: 12.5px;
+  color: var(--c-muted);
+  letter-spacing: 0.04em;
+}
+
+/* ---------- Admin header ---------- */
+.admin-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(250, 247, 240, 0.85);
+  backdrop-filter: saturate(180%) blur(14px);
+  -webkit-backdrop-filter: saturate(180%) blur(14px);
+  border-bottom: 1px solid var(--c-border-soft);
+}
+.admin-header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 24px;
+  gap: 16px;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.brand-mark {
+  width: 60px;
+  height: 60px;
+  border-radius: var(--radius-md);
+  object-fit: contain;
+  box-shadow: var(--shadow-sm);
+  flex-shrink: 0;
+  background: var(--c-surface);
+  padding: 2px;
+}
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+.brand-name {
+  font-family: var(--f-serif);
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--c-primary);
+  letter-spacing: -0.01em;
+}
+.brand-tag {
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--c-gold-dark);
+  margin-top: 4px;
+  font-weight: 500;
+}
+.admin-user {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+.admin-user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  line-height: 1.2;
+}
+.admin-user-label {
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--c-gold-dark);
+  font-weight: 600;
+}
+.admin-user-email {
+  font-size: 14px;
+  color: var(--c-ink);
+  font-weight: 500;
+  margin-top: 2px;
+}
+
+/* ---------- Admin main ---------- */
+.admin-main {
+  padding: 40px 24px 80px;
+}
+.admin-section {
+  margin-bottom: 56px;
+}
+.section-head {
+  margin-bottom: 24px;
+}
+.section-head h2 {
+  font-size: clamp(24px, 3vw, 32px);
+  font-weight: 500;
+}
+.section-sub {
+  color: var(--c-ink-soft);
+  font-size: 15px;
+  margin-top: 8px;
+  max-width: 600px;
+}
+
+/* ---------- Form: agregar producto ---------- */
+.product-form {
+  background: var(--c-surface);
+  border: 1px solid var(--c-border-soft);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  box-shadow: var(--shadow-sm);
+}
+.form-grid {
+  display: grid;
+  grid-template-columns: minmax(220px, 320px) 1fr;
+  gap: 28px;
+  align-items: start;
+}
+.form-cols {
+  display: flex;
+  flex-direction: column;
+  align-self: start;
+}
+.product-form .field {
+  margin-bottom: 14px;
+}
+.product-form .field-check {
+  padding: 4px 0 8px;
+  margin-bottom: 18px;
+}
+
+/* ---------- File drop ---------- */
+.field-file {
+  display: block;
+}
+.file-drop {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border: 1.5px dashed var(--c-border);
+  border-radius: var(--radius-md);
+  background: var(--c-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  overflow: hidden;
+  transition:
+    border-color 0.2s var(--ease),
+    background 0.2s var(--ease);
+}
+.file-drop:hover,
+.file-drop:focus-visible,
+.file-drop.is-dragover {
+  border-color: var(--c-primary-light);
+  background: var(--c-primary-soft);
+  outline: none;
+}
+.file-drop-empty {
+  text-align: center;
+  color: var(--c-muted);
+  padding: 16px;
+}
+.file-drop-empty svg {
+  color: var(--c-primary);
+  opacity: 0.6;
+  margin-bottom: 8px;
+}
+.file-drop-empty p {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--c-ink-soft);
+  margin-bottom: 4px;
+}
+.file-preview {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.file-preview.is-marked {
+  opacity: 0.4;
+}
+.file-preview.is-marked::after {
+  content: 'Se eliminará al guardar';
+  position: absolute;
+  inset: auto 8px 8px;
+  background: var(--c-danger);
+  color: #fff;
+  font-size: 11px;
+  text-align: center;
+  border-radius: 6px;
+  padding: 4px 8px;
+  pointer-events: none;
+}
+.thumb-remove {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 26px;
+  height: 26px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(31, 35, 71, 0.85);
+  color: #fff;
+  font-size: 16px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2;
+}
+
+/* ---------- Switch toggle ---------- */
+.field-check {
+  display: flex !important;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+}
+.field-check input[type='checkbox'] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+  background: var(--c-border);
+  border-radius: var(--radius-pill);
+  transition: background 0.2s var(--ease);
+  flex-shrink: 0;
+}
+.switch::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 18px;
+  height: 18px;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.2s var(--ease);
+}
+.field-check input:checked ~ .switch {
+  background: var(--c-success);
+}
+.field-check input:checked ~ .switch::after {
+  transform: translateX(20px);
+}
+.field-check input:focus-visible ~ .switch {
+  outline: 2px solid var(--c-primary-light);
+  outline-offset: 2px;
+}
+.field-check-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--c-ink);
+  user-select: none;
+}
+
+/* ---------- Admin grid (products) ---------- */
+.admin-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+.admin-card {
+  background: var(--c-surface);
+  border: 1px solid var(--c-border-soft);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition:
+    transform 0.25s var(--ease),
+    box-shadow 0.25s var(--ease),
+    opacity 0.2s var(--ease);
+}
+.admin-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+.admin-card.is-unavailable {
+  opacity: 0.72;
+}
+.admin-card-media {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  background: linear-gradient(135deg, var(--c-primary-soft) 0%, var(--c-gold-soft) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.admin-card-media::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.5), transparent 50%),
+    radial-gradient(circle at 70% 80%, rgba(216, 151, 42, 0.18), transparent 60%);
+}
+.admin-card-img {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.admin-card-placeholder {
+  position: relative;
+  color: var(--c-primary);
+  opacity: 0.5;
+  font-family: var(--f-serif);
+  font-size: 38px;
+  font-style: italic;
+  font-weight: 500;
+}
+.admin-card-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  padding: 5px 12px;
+  border-radius: var(--radius-pill);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: var(--c-danger);
+  color: #fff;
+  box-shadow: var(--shadow-sm);
+  z-index: 1;
+}
+.admin-card-status {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  padding: 5px 12px;
+  border-radius: var(--radius-pill);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: var(--c-success);
+  color: #fff;
+  box-shadow: var(--shadow-sm);
+  z-index: 1;
+}
+.admin-card.is-unavailable .admin-card-status {
+  background: var(--c-muted);
+}
+.admin-card-body {
+  padding: 18px 20px 20px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.admin-card-cat {
+  display: block;
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--c-gold-dark);
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.admin-card-name {
+  font-family: var(--f-serif);
+  font-size: 17px;
+  font-weight: 500;
+  color: var(--c-ink);
+  margin-bottom: 6px;
+  line-height: 1.25;
+}
+.admin-card-price {
+  font-family: var(--f-serif);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--c-primary);
+  margin-bottom: 16px;
+}
+.admin-card-price .currency {
+  font-size: 13px;
+  color: var(--c-gold-dark);
+  margin-right: 3px;
+  font-weight: 500;
+}
+.admin-card-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px solid var(--c-border-soft);
+  gap: 12px;
+}
+.admin-card-toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12.5px;
+  color: var(--c-ink-soft);
+  font-weight: 500;
+  cursor: pointer;
+  user-select: none;
+}
+.admin-card-toggle input[type='checkbox'] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+.admin-card-toggle input:checked ~ .switch {
+  background: var(--c-success);
+}
+.admin-card-toggle input:checked ~ .switch::after {
+  transform: translateX(20px);
+}
+.admin-card-toggle input:focus-visible ~ .switch {
+  outline: 2px solid var(--c-primary-light);
+  outline-offset: 2px;
+}
+.admin-card-actions {
+  display: flex;
+  gap: 6px;
+}
+.admin-btn {
+  width: 34px;
+  height: 34px;
+  border: none;
+  background: var(--c-primary);
+  color: #fff;
+  border-radius: var(--radius-pill);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s var(--ease);
+}
+.admin-btn:hover {
+  background: var(--c-primary-dark);
+}
+.admin-btn.is-danger {
+  background: var(--c-danger);
+}
+.admin-btn.is-danger:hover {
+  background: var(--c-danger);
+  filter: brightness(0.92);
+}
+
+/* ---------- Filters (admin) ---------- */
+.admin-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+.admin-filters .filter {
+  padding: 9px 18px;
+  border: 1.5px solid var(--c-border);
+  background: var(--c-surface);
+  color: var(--c-ink-soft);
+  border-radius: var(--radius-pill);
+  font-weight: 500;
+  font-size: 13.5px;
+  cursor: pointer;
+  transition: all 0.2s var(--ease);
+}
+.admin-filters .filter:hover {
+  border-color: var(--c-primary-light);
+  color: var(--c-primary);
+}
+.admin-filters .filter.is-active {
+  background: var(--c-primary);
+  border-color: var(--c-primary);
+  color: #fff;
+  box-shadow: var(--shadow-sm);
+}
+
+/* ---------- Tabs nav (Productos / Pedidos) ---------- */
+.tabs-nav {
+  display: flex;
+  gap: 6px;
+  border-bottom: 1px solid var(--c-border-soft);
+  margin-bottom: 28px;
+}
+.tabs-nav .tab {
+  padding: 12px 18px;
+  border: none;
+  background: transparent;
+  color: var(--c-muted);
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  position: relative;
+  transition: color 0.2s var(--ease);
+}
+.tabs-nav .tab::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 12px;
+  right: 12px;
+  height: 2px;
+  background: var(--c-primary);
+  transform: scaleX(0);
+  transition: transform 0.2s var(--ease);
+}
+.tabs-nav .tab:hover {
+  color: var(--c-ink);
+}
+.tabs-nav .tab.is-active {
+  color: var(--c-primary);
+}
+.tabs-nav .tab.is-active::after {
+  transform: scaleX(1);
+}
+.tabs-nav .tab .count {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 1px 8px;
+  background: var(--c-primary-soft);
+  color: var(--c-primary);
+  border-radius: var(--radius-pill);
+  font-size: 11px;
+}
+
+/* ---------- Empty state ---------- */
+.empty-msg {
+  text-align: center;
+  color: var(--c-muted);
+  padding: 40px;
+  font-style: italic;
+}
+
+/* ---------- Buttons: flat blue, sin efectos hover del base ---------- */
+.btn-primary,
+.btn-primary:hover,
+.btn-primary:focus {
+  background: var(--c-primary);
+  background-image: none;
+  color: #fff;
+  box-shadow: none;
+  transform: none;
+}
+.btn-ghost,
+.btn-ghost:hover,
+.btn-ghost:focus {
+  background: transparent;
+  color: var(--c-primary);
+  border-color: var(--c-primary);
+  transform: none;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 960px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+  .admin-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .admin-user-info {
+    display: none;
+  }
+}
+@media (max-width: 600px) {
+  .auth-card {
+    padding: 32px 24px 28px;
+  }
+  .admin-header-inner {
+    padding: 16px 18px;
+    gap: 8px;
+  }
+  .admin-main {
+    padding: 28px 18px 60px;
+  }
+  .product-form {
+    padding: 20px;
+  }
+  .admin-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .admin-section {
+    margin-bottom: 40px;
+  }
+  .brand-tag {
+    font-size: 10px;
+    letter-spacing: 0.14em;
+  }
+  .brand-name {
+    font-size: 19px;
+  }
+  .brand-mark {
+    width: 50px;
+    height: 50px;
+  }
+  .admin-user .btn-ghost {
+    padding: 10px 14px;
+    font-size: 13px;
+  }
+}

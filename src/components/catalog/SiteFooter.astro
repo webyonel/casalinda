@@ -1,0 +1,46 @@
+---
+/**
+ * SiteFooter.astro · Pie con marca, contacto y redes sociales.
+ */
+---
+<footer class="site-footer" id="contacto">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <img src="/logo-dorado.png" alt="Casa Linda" class="footer-mark" />
+      <div>
+        <span class="brand-name footer-name">Casa Linda</span>
+        <p class="footer-tag">Hogar y más · Detalles que transforman tu hogar.</p>
+      </div>
+    </div>
+    <div class="footer-info">
+      <p>Visítanos</p>
+      <p class="muted">Carretera Central, Aeropuerto. #547</p>
+      <p class="footer-eyebrow">Teléfonos</p>
+      <p><a class="footer-link" href="tel:+5354185862">+53 5418 5862</a></p>
+      <p><a class="footer-link" href="tel:+5352498688">+53 5249 8688</a></p>
+      <p class="muted">Horario: Lun–Sáb · 9:00 a 18:00</p>
+    </div>
+    <div class="footer-social">
+      <p>Síguenos</p>
+      <div class="social-icons">
+        <a href="#" class="social-link" aria-label="Instagram" data-social="instagram">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="3" y="3" width="18" height="18" rx="5"/>
+            <circle cx="12" cy="12" r="4"/>
+            <circle cx="17.5" cy="6.5" r="1" fill="currentColor"/>
+          </svg>
+          <span>Instagram</span>
+        </a>
+        <a href="#" class="social-link" aria-label="Facebook" data-social="facebook">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
+            <path d="M22 12.07C22 6.51 17.52 2 12 2S2 6.51 2 12.07c0 4.99 3.66 9.13 8.44 9.93v-7.02H7.9v-2.91h2.54V9.85c0-2.51 1.49-3.89 3.77-3.89 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56v1.88h2.78l-.45 2.91h-2.33V22c4.78-.8 8.44-4.94 8.44-9.93z"/>
+          </svg>
+          <span>Facebook</span>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bar">
+    <p>© <span id="year"></span> Casa Linda. Todos los derechos reservados.</p>
+  </div>
+</footer>

@@ -1,0 +1,28 @@
+---
+/**
+ * ProductCard.astro · Plantilla reutilizable para clonar desde JS.
+ * El script rellena texto, imagen, clases y data-id en cada clon.
+ */
+---
+<template id="tpl-product-card">
+  <article class="card">
+    <div class="card-media">
+      <span class="card-badge" hidden>Agotado</span>
+      <img class="card-img" alt="" hidden />
+      <div class="card-icon" hidden>
+        <svg viewBox="0 0 64 64" width="72" height="72" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 18h32l-3 38a4 4 0 0 1-4 4H23a4 4 0 0 1-4-4z"/><path d="M24 18v-4a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v4"/></svg>
+      </div>
+    </div>
+    <div class="card-body">
+      <span class="card-cat"></span>
+      <h3 class="card-title"></h3>
+      <p class="card-price">
+        <span class="currency">$</span><span class="amount"></span> <span class="currency">CUP</span>
+      </p>
+      <button class="card-action" type="button" data-action="add">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        <span class="action-label">Agregar al pedido</span>
+      </button>
+    </div>
+  </article>
+</template>

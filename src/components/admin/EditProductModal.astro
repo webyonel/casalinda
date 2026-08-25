@@ -1,0 +1,66 @@
+---
+/**
+ * EditProductModal.astro · Modal para editar un producto (imagen única).
+ * IDs esperados: #editModal, #editForm, #editName, #editPrice, #editCategory,
+ * #editAvailable, #editSubmit, #editFileDrop, #editFileInput,
+ * #editPreview, #editFileEmpty, #editFileClear.
+ */
+---
+<div class="modal" id="editModal" aria-hidden="true" role="dialog" aria-label="Editar producto">
+  <div class="modal-backdrop" data-close></div>
+  <div class="modal-panel" role="document">
+    <header class="modal-head">
+      <div>
+        <span class="eyebrow">Editar</span>
+        <h3>Modificar producto</h3>
+      </div>
+      <button class="icon-btn" data-close aria-label="Cerrar" type="button">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </header>
+
+    <form id="editForm" class="form" novalidate>
+      <label class="field">
+        <span>Nombre</span>
+        <input type="text" id="editName" required />
+      </label>
+
+      <label class="field">
+        <span>Precio (CUP)</span>
+        <input type="number" id="editPrice" required min="0" step="1" />
+      </label>
+
+      <label class="field">
+        <span>Categoría</span>
+        <select id="editCategory" required>
+          <option value="" disabled>— Selecciona una categoría —</option>
+        </select>
+      </label>
+
+      <label class="field field-check">
+        <input type="checkbox" id="editAvailable" />
+        <span class="switch" aria-hidden="true"></span>
+        <span class="field-check-label">Disponible (no agotado)</span>
+      </label>
+
+      <label class="field">
+        <span>Imagen</span>
+        <div class="file-drop" id="editFileDrop" tabindex="0" style="aspect-ratio: 4 / 3;">
+          <input type="file" id="editFileInput" accept="image/*" hidden />
+          <div class="file-drop-empty" id="editFileEmpty">
+            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            <p>Haz clic para reemplazar la imagen</p>
+            <span class="muted small">PNG, JPG · máx 5MB</span>
+          </div>
+          <img class="file-preview" id="editPreview" hidden alt="" />
+          <button type="button" class="thumb-remove" id="editFileClear" hidden aria-label="Quitar imagen">×</button>
+        </div>
+      </label>
+
+      <div class="form-actions">
+        <button type="button" class="btn btn-ghost" data-close>Cancelar</button>
+        <button type="submit" id="editSubmit" class="btn btn-primary">Guardar cambios</button>
+      </div>
+    </form>
+  </div>
+</div>

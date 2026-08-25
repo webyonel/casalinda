@@ -1,0 +1,48 @@
+---
+/**
+ * admin.astro · Punto de entrada del panel de administración.
+ * Carga CSS en orden, monta los componentes y arranca el shell cliente.
+ */
+import '../styles/tokens.css';
+import '../styles/base.css';
+import '../styles/admin.css';
+import '../styles/admin-extensions.css';
+
+import AdminLogin from '../components/admin/AdminLogin.astro';
+import AdminShell from '../components/admin/AdminShell.astro';
+import EditProductModal from '../components/admin/EditProductModal.astro';
+import Overlays from '../components/admin/Overlays.astro';
+import AdminTemplates from '../components/admin/AdminTemplates.astro';
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin · Casa Linda · Hogar y más</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/app-icon.png" />
+    <meta name="theme-color" content="#3D3F8B" />
+    <meta name="description" content="Panel de administración de Casa Linda · Hogar y más — gestión interna del catálogo." />
+    <meta name="robots" content="noindex,nofollow" />
+  </head>
+  <body>
+    <AdminLogin />
+    <AdminShell />
+    <EditProductModal />
+    <Overlays />
+    <AdminTemplates />
+
+    <script>
+      import { init } from '../lib/admin/shell';
+      void init();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,101 @@
+---
+/**
+ * AdminShell.astro · Vista principal del panel (header + tabs + productos + pedidos).
+ * IDs esperados por el shell: #appView, #userEmail, [data-tab], #productFilters,
+ * #productForm, #adminGrid, #productsCount, #emptyMsg, #productsLoading,
+ * #orderFilters, #ordersList, #ordersCount, #ordersLoading, #ordersEmpty.
+ */
+---
+<div id="appView" hidden>
+  <header class="admin-header">
+    <div class="container admin-header-inner">
+      <a class="brand" aria-label="Casa Linda · Admin">
+        <img src="/logo.png" alt="Casa Linda" class="brand-mark" />
+        <span class="brand-text">
+          <span class="brand-name">Casa Linda</span>
+          <span class="brand-tag">Panel · Administración</span>
+        </span>
+      </a>
+      <div class="admin-user">
+        <div class="admin-user-info">
+          <span class="admin-user-label">Sesión activa</span>
+          <span class="admin-user-email" id="userEmail">—</span>
+        </div>
+        <button class="btn btn-ghost btn-sm" id="logoutBtn" type="button" aria-label="Cerrar sesión">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          Cerrar sesión
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container admin-main">
+    <!-- ============== PRODUCTOS ============== -->
+    <section id="productsPanel" class="admin-section">
+      <div class="section-head">
+        <span class="eyebrow">Nuevo producto</span>
+        <h2>Agregar al catálogo</h2>
+        <p class="section-sub">Completa los datos del producto. Aparecerá inmediatamente en la lista inferior.</p>
+      </div>
+
+      <form id="productForm" class="product-form" novalidate>
+        <div class="form-grid">
+          <label class="field field-file">
+            <span>Foto del producto</span>
+            <div class="file-drop" id="fileDrop" tabindex="0">
+              <input type="file" id="productImage" accept="image/*" hidden />
+              <div class="file-drop-empty" id="fileDropEmpty">
+                <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                <p>Haz clic o arrastra una imagen aquí</p>
+                <span class="muted small">PNG, JPG · máx 5MB</span>
+              </div>
+              <img class="file-preview" id="filePreview" hidden alt="" />
+            </div>
+          </label>
+
+          <div class="form-cols">
+            <label class="field">
+              <span>Nombre</span>
+              <input type="text" id="productName" required placeholder="Ej: Set de toallas de algodón" />
+            </label>
+
+            <label class="field">
+              <span>Precio (CUP)</span>
+              <input type="number" id="productPrice" required min="0" step="1" placeholder="0" />
+            </label>
+
+            <label class="field">
+              <span>Categoría</span>
+              <select id="productCategory" required>
+                <option value="" disabled selected>— Selecciona una categoría —</option>
+              </select>
+            </label>
+
+            <label class="field field-check">
+              <input type="checkbox" id="productAvailable" checked />
+              <span class="switch" aria-hidden="true"></span>
+              <span class="field-check-label">Disponible (no agotado)</span>
+            </label>
+
+            <button type="submit" id="productSubmit" class="btn btn-primary btn-block">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              Agregar producto
+            </button>
+          </div>
+        </div>
+      </form>
+
+      <div class="section-head" style="margin-top:48px;">
+        <span class="eyebrow">Catálogo actual</span>
+        <h2>Productos <span class="muted small">(<span id="productsCount">0</span>)</span></h2>
+      </div>
+
+      <div class="admin-filters" id="productFilters" role="tablist" aria-label="Categorías"></div>
+
+      <div id="productsLoading" class="loading-row" hidden><div class="spinner" aria-label="Cargando"></div></div>
+      <div class="admin-grid" id="adminGrid"></div>
+      <p class="empty-msg" id="emptyMsg" hidden>No hay productos en esta categoría por el momento.</p>
+    </section>
+
+    </main>
+</div>

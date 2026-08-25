@@ -1,0 +1,76 @@
+---
+/**
+ * index.astro · Catálogo público de Casa Linda.
+ * Carga CSS en orden, monta los componentes y arranca la lógica cliente (fetch a Supabase).
+ */
+import '../styles/tokens.css';
+import '../styles/base.css';
+import '../styles/catalog.css';
+
+import SiteHeader from '../components/catalog/SiteHeader.astro';
+import Hero from '../components/catalog/Hero.astro';
+import HowItWorks from '../components/catalog/HowItWorks.astro';
+import CatalogSection from '../components/catalog/CatalogSection.astro';
+import SiteFooter from '../components/catalog/SiteFooter.astro';
+import FabButton from '../components/catalog/FabButton.astro';
+import CartDrawer from '../components/catalog/CartDrawer.astro';
+import CheckoutModal from '../components/catalog/CheckoutModal.astro';
+import Toast from '../components/catalog/Toast.astro';
+import ProductCard from '../components/catalog/ProductCard.astro';
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Casa Linda · Hogar y más</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/app-icon.png" />
+    <meta name="theme-color" content="#3D3F8B" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="description" content="Casa Linda · Hogar y más — Catálogo de productos para el hogar" />
+
+    <!-- Open Graph (WhatsApp, Facebook, LinkedIn, Telegram, Discord…) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Casa Linda · Hogar y más" />
+    <meta property="og:title" content="Casa Linda · Hogar y más — Catálogo y pedido a domicilio" />
+    <meta property="og:description" content="Explora nuestra selección de piezas para cocina, baño, cuarto, sala, iluminación y decoración. Elige lo que te enamore y completa tu pedido por WhatsApp." />
+    <meta property="og:image" content="/img/preview.png" />
+    <meta property="og:image:width" content="1260" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Casa Linda · Hogar y más — catálogo de productos para el hogar" />
+    <meta property="og:locale" content="es_ES" />
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Casa Linda · Hogar y más — Catálogo y pedido a domicilio" />
+    <meta name="twitter:description" content="Explora nuestra selección de piezas para cocina, baño, cuarto, sala, iluminación y decoración. Elige lo que te enamore y completa tu pedido por WhatsApp." />
+    <meta name="twitter:image" content="/img/preview.png" />
+  </head>
+  <body>
+    <SiteHeader />
+    <Hero />
+    <HowItWorks />
+    <CatalogSection />
+    <SiteFooter />
+
+    <FabButton />
+    <CartDrawer />
+    <CheckoutModal />
+    <Toast />
+
+    <!-- Plantilla para clonar cards (no se renderiza) -->
+    <ProductCard />
+
+    <script>
+      import '../lib/catalog';
+    </script>
+  </body>
+</html>

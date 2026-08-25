@@ -1,0 +1,281 @@
+/* =====================================================
+   Casa Linda · Admin extensions (pedidos, dialogs)
+   Requiere tokens.css, base.css y admin.css cargados antes.
+   ===================================================== */
+
+/* ---------- Pedidos: filtros ---------- */
+.orders-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.orders-toolbar label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13.5px;
+  color: var(--c-ink-soft);
+  font-weight: 500;
+}
+.orders-toolbar select {
+  padding: 9px 36px 9px 14px;
+  font: inherit;
+  font-size: 13.5px;
+  color: var(--c-ink);
+  background: var(--c-surface);
+  border: 1.5px solid var(--c-border);
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%236B6F8C' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+}
+
+/* ---------- Pedidos: lista y cards ---------- */
+.orders-list {
+  display: grid;
+  gap: 14px;
+}
+.order-card {
+  background: var(--c-surface);
+  border: 1px solid var(--c-border-soft);
+  border-radius: var(--radius-lg);
+  padding: 18px 22px;
+  cursor: pointer;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 18px;
+  align-items: center;
+  transition:
+    transform 0.2s var(--ease),
+    box-shadow 0.2s var(--ease);
+}
+.order-card:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+.order-card-head {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.order-id {
+  font-family: var(--f-serif);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--c-primary);
+  letter-spacing: 0.02em;
+}
+.order-date {
+  font-size: 12px;
+  color: var(--c-muted);
+}
+.order-customer {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--c-ink);
+}
+.order-meta {
+  font-size: 13px;
+  color: var(--c-ink-soft);
+  margin-top: 2px;
+}
+.order-meta-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.order-foot {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-end;
+}
+.order-total {
+  font-family: var(--f-serif);
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--c-primary);
+}
+.order-items-count {
+  font-size: 12px;
+  color: var(--c-muted);
+}
+.order-estado-badge {
+  display: inline-block;
+  padding: 4px 11px;
+  border-radius: var(--radius-pill);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: var(--c-primary-soft);
+  color: var(--c-primary);
+}
+.order-estado-badge[data-estado='nuevo'] {
+  background: var(--c-primary);
+  color: #fff;
+}
+.order-estado-badge[data-estado='en_preparacion'] {
+  background: var(--c-warning-soft);
+  color: var(--c-warning);
+}
+.order-estado-badge[data-estado='enviado'] {
+  background: var(--c-primary-soft);
+  color: var(--c-primary);
+}
+.order-estado-badge[data-estado='entregado'] {
+  background: #d6efe9;
+  color: var(--c-success);
+}
+.order-estado-badge[data-estado='cancelado'] {
+  background: var(--c-danger-soft);
+  color: var(--c-danger);
+}
+
+.order-estado-select {
+  padding: 7px 32px 7px 12px;
+  font: inherit;
+  font-size: 12.5px;
+  color: var(--c-ink);
+  background: var(--c-bg);
+  border: 1.5px solid var(--c-border);
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%236B6F8C' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+}
+
+/* ---------- Modal pedido (detalle) ---------- */
+.order-modal-panel {
+  width: min(640px, 100%);
+}
+.order-modal-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px 24px;
+  margin-bottom: 20px;
+}
+.order-modal-grid div {
+  display: flex;
+  flex-direction: column;
+}
+.order-modal-grid label {
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--c-gold-dark);
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+.order-modal-grid span {
+  font-size: 15px;
+  color: var(--c-ink);
+}
+.order-items-list {
+  list-style: none;
+  margin: 0 0 16px;
+  padding: 14px 18px;
+  background: var(--c-bg);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--c-border-soft);
+}
+.order-items-list li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 0;
+  font-size: 14px;
+  color: var(--c-ink-soft);
+  border-bottom: 1px dashed var(--c-border-soft);
+}
+.order-items-list li:last-child {
+  border-bottom: none;
+}
+.order-items-list strong {
+  color: var(--c-ink);
+  font-weight: 600;
+}
+.order-modal-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 18px;
+  background: var(--c-primary-soft);
+  border-radius: var(--radius-md);
+}
+.order-modal-total span:first-child {
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--c-gold-dark);
+  font-weight: 600;
+}
+.order-modal-total span:last-child {
+  font-family: var(--f-serif);
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--c-primary);
+}
+
+/* ---------- Confirm dialog ---------- */
+.confirm-dialog {
+  border: none;
+  padding: 0;
+  border-radius: var(--radius-lg);
+  background: var(--c-surface);
+  max-width: 420px;
+  width: 90%;
+  box-shadow: var(--shadow-lg);
+}
+.confirm-dialog::backdrop {
+  background: rgba(31, 35, 71, 0.55);
+}
+.confirm-dialog-body {
+  padding: 28px 28px 22px;
+}
+.confirm-dialog-body h3 {
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+.confirm-dialog-body p {
+  color: var(--c-ink-soft);
+  font-size: 14.5px;
+}
+.confirm-dialog-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  padding: 0 28px 24px;
+}
+
+/* ---------- Loading row ---------- */
+.loading-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+}
+
+/* ---------- Responsive pedidos ---------- */
+@media (max-width: 720px) {
+  .order-card {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .order-foot {
+    align-items: flex-start;
+    text-align: left;
+  }
+  .order-modal-grid {
+    grid-template-columns: 1fr;
+  }
+}
