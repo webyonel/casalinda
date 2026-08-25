@@ -17,6 +17,8 @@ import CartDrawer from '../components/catalog/CartDrawer.astro';
 import CheckoutModal from '../components/catalog/CheckoutModal.astro';
 import Toast from '../components/catalog/Toast.astro';
 import ProductCard from '../components/catalog/ProductCard.astro';
+
+const BASE = import.meta.env.BASE_URL;
 ---
 
 <!doctype html>
@@ -31,8 +33,8 @@ import ProductCard from '../components/catalog/ProductCard.astro';
       href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="icon" type="image/png" href="/favicon.png" />
-    <link rel="apple-touch-icon" href="/app-icon.png" />
+    <link rel="icon" type="image/png" href={`${BASE}favicon.png`} />
+    <link rel="apple-touch-icon" href={`${BASE}app-icon.png`} />
     <meta name="theme-color" content="#3D3F8B" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="description" content="Casa Linda · Hogar y más — Catálogo de productos para el hogar" />
@@ -42,7 +44,7 @@ import ProductCard from '../components/catalog/ProductCard.astro';
     <meta property="og:site_name" content="Casa Linda · Hogar y más" />
     <meta property="og:title" content="Casa Linda · Hogar y más — Catálogo y pedido a domicilio" />
     <meta property="og:description" content="Explora nuestra selección de piezas para cocina, baño, cuarto, sala, iluminación y decoración. Elige lo que te enamore y completa tu pedido por WhatsApp." />
-    <meta property="og:image" content="/img/preview.png" />
+    <meta property="og:image" content={`${BASE}img/preview.png`} />
     <meta property="og:image:width" content="1260" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="Casa Linda · Hogar y más — catálogo de productos para el hogar" />
@@ -52,7 +54,7 @@ import ProductCard from '../components/catalog/ProductCard.astro';
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Casa Linda · Hogar y más — Catálogo y pedido a domicilio" />
     <meta name="twitter:description" content="Explora nuestra selección de piezas para cocina, baño, cuarto, sala, iluminación y decoración. Elige lo que te enamore y completa tu pedido por WhatsApp." />
-    <meta name="twitter:image" content="/img/preview.png" />
+    <meta name="twitter:image" content={`${BASE}img/preview.png`} />
   </head>
   <body>
     <SiteHeader />

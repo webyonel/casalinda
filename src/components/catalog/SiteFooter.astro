@@ -2,11 +2,12 @@
 /**
  * SiteFooter.astro · Pie con marca, contacto y redes sociales.
  */
+const BASE = import.meta.env.BASE_URL;
 ---
 <footer class="site-footer" id="contacto">
   <div class="container footer-inner">
     <div class="footer-brand">
-      <img src="/logo-dorado.png" alt="Casa Linda" class="footer-mark" />
+      <img src={`${BASE}logo-dorado.png`} alt="Casa Linda" class="footer-mark" />
       <div>
         <span class="brand-name footer-name">Casa Linda</span>
         <p class="footer-tag">Hogar y más · Detalles que transforman tu hogar.</p>

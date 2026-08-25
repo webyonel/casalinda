@@ -12,6 +12,8 @@ import AdminShell from '../components/admin/AdminShell.astro';
 import EditProductModal from '../components/admin/EditProductModal.astro';
 import Overlays from '../components/admin/Overlays.astro';
 import AdminTemplates from '../components/admin/AdminTemplates.astro';
+
+const BASE = import.meta.env.BASE_URL;
 ---
 
 <!doctype html>
@@ -26,8 +28,8 @@ import AdminTemplates from '../components/admin/AdminTemplates.astro';
       href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="icon" type="image/png" href="/favicon.png" />
-    <link rel="apple-touch-icon" href="/app-icon.png" />
+    <link rel="icon" type="image/png" href={`${BASE}favicon.png`} />
+    <link rel="apple-touch-icon" href={`${BASE}app-icon.png`} />
     <meta name="theme-color" content="#3D3F8B" />
     <meta name="description" content="Panel de administración de Casa Linda · Hogar y más — gestión interna del catálogo." />
     <meta name="robots" content="noindex,nofollow" />

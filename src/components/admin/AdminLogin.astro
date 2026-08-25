@@ -3,11 +3,12 @@
  * AdminLogin.astro · Vista de login (email + contraseña)
  * IDs esperados por el shell: #loginView, #loginForm, #loginEmail, #loginPass, #loginSubmit
  */
+const BASE = import.meta.env.BASE_URL;
 ---
 <div id="loginView" class="auth-wrap">
   <div class="auth-card">
     <div class="auth-brand">
-      <img src="/logo-dorado.png" alt="Casa Linda" class="auth-mark" />
+      <img src={`${BASE}logo-dorado.png`} alt="Casa Linda" class="auth-mark" />
       <span class="auth-name">Casa Linda</span>
       <span class="auth-tag">Panel de administración</span>
     </div>
