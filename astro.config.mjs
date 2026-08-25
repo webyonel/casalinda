@@ -4,7 +4,7 @@ import { defineConfig } from 'astro/config';
 // https://astro.build/config
 export default defineConfig({
   output: 'static',
-  // `base` se ajusta al nombre del repo en el deploy a GitHub Pages.
-  // En local deja '/' para que /admin funcione sin prefijo.
-  base: '/',
+  // Repo: webyonel/casalinda → URL: https://webyonel.github.io/casalinda/
+  // En local con `astro dev` se ignora el base, así que /admin funciona igual.
+  base: process.env.BASE_PATH || '/casalinda/',
 });

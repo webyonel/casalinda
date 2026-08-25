@@ -382,7 +382,12 @@ function bindFileDrop(): void {
 
   const openPicker = () => input.click();
 
-  drop.addEventListener('click', openPicker);
+  // El <input> está DENTRO del drop: su click sintético burbujea hasta aquí.
+  // Si no lo filtramos, se vuelve a llamar openPicker() y se abre otro picker.
+  drop.addEventListener('click', (e) => {
+    if ((e.target as HTMLElement).tagName === 'INPUT') return;
+    openPicker();
+  });
   drop.addEventListener('keydown', (e) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
@@ -556,7 +561,11 @@ function bindEditFileDrop(): void {
   const input = $<HTMLInputElement>('#editFileInput');
   if (!drop || !input) return;
 
-  drop.addEventListener('click', () => input.click());
+  // Mismo bug que en bindFileDrop: el click sintético del input burbujea.
+  drop.addEventListener('click', (e) => {
+    if ((e.target as HTMLElement).tagName === 'INPUT') return;
+    input.click();
+  });
   drop.addEventListener('keydown', (e) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
