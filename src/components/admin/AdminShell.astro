@@ -2,7 +2,7 @@
 /**
  * AdminShell.astro · Vista principal del panel (header + tabs + productos + pedidos).
  * IDs esperados por el shell: #appView, #userEmail, [data-tab], #productFilters,
- * #productForm, #adminGrid, #productsCount, #emptyMsg, #productsLoading,
+ * #productForm, #adminGrid, #productsCount, #emptyMsg,
  * #orderFilters, #ordersList, #ordersCount, #ordersLoading, #ordersEmpty.
  */
 const BASE = import.meta.env.BASE_URL;
@@ -93,7 +93,6 @@ const BASE = import.meta.env.BASE_URL;
 
       <div class="admin-filters" id="productFilters" role="tablist" aria-label="Categorías"></div>
 
-      <div id="productsLoading" class="loading-row" hidden><div class="spinner" aria-label="Cargando"></div></div>
       <div class="admin-grid" id="adminGrid"></div>
       <p class="empty-msg" id="emptyMsg" hidden>No hay productos en esta categoría por el momento.</p>
     </section>

@@ -232,7 +232,6 @@ function bindFilters(): void {
 async function renderProductos(): Promise<void> {
   const grid = $('#adminGrid');
   if (!grid) return;
-  toggleHidden($('#productsLoading'), true);
   setText('#productsCount', '0');
 
   state.productos = await listProducts({ categoria_slug: state.filterCat });
@@ -245,7 +244,6 @@ async function renderProductos(): Promise<void> {
   });
 
   setText('#productsCount', String(state.productos.length));
-  toggleHidden($('#productsLoading'), false);
 
   clear(grid);
   if (state.productos.length === 0) {

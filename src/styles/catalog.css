@@ -305,16 +305,20 @@
   height: 100%;
   object-fit: cover;
 }
-.card-icon {
+.card-noimg {
   position: relative;
+  z-index: 1;
+  max-width: 80%;
+  text-align: center;
+  font-size: 13.5px;
+  line-height: 1.45;
+  font-weight: 500;
   color: var(--c-primary);
-  opacity: 0.85;
-  transition:
-    transform 0.5s var(--ease),
-    color 0.35s var(--ease);
-}
-.card:hover .card-icon {
-  transform: scale(1.08) rotate(-3deg);
+  padding: 14px 18px;
+  background: rgba(255, 255, 255, 0.55);
+  border-radius: var(--radius-md);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
 }
 .card-badge {
   position: absolute;
@@ -413,8 +417,8 @@
   background: rgba(31, 35, 71, 0.45);
   z-index: 1;
 }
-.card.is-unavailable .card-icon {
-  opacity: 0.6;
+.card.is-unavailable .card-noimg {
+  opacity: 0.7;
 }
 .card.is-unavailable .card-action {
   border-color: var(--c-border);

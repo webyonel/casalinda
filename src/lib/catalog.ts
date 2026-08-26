@@ -137,17 +137,17 @@ function fillCard(card: HTMLElement, p: ProductVM): void {
   const media = card.querySelector('.card-media') as HTMLElement;
   const badge = card.querySelector('.card-badge') as HTMLElement;
   const img = card.querySelector('.card-img') as HTMLImageElement;
-  const icon = card.querySelector('.card-icon') as HTMLElement;
+  const noImg = card.querySelector('.card-noimg') as HTMLElement;
 
   if (p.image) {
     img.hidden = false;
     img.src = p.image;
     img.alt = p.nombre;
-    icon.hidden = true;
+    noImg.hidden = true;
   } else {
     img.hidden = true;
     img.removeAttribute('src');
-    icon.hidden = false;
+    noImg.hidden = false;
   }
   badge.hidden = !unavailable;
 
