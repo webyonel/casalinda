@@ -141,13 +141,26 @@ function fillCard(card: HTMLElement, p: ProductVM): void {
 
   if (p.image) {
     img.hidden = false;
-    img.src = p.image;
+    img.style.display = '';
     img.alt = p.nombre;
+    img.onerror = () => {
+      img.hidden = true;
+      img.style.display = 'none';
+      img.removeAttribute('src');
+      img.onerror = null;
+      noImg.hidden = false;
+      noImg.style.display = '';
+    };
+    img.src = p.image;
     noImg.hidden = true;
+    noImg.style.display = 'none';
   } else {
     img.hidden = true;
+    img.style.display = 'none';
     img.removeAttribute('src');
+    img.onerror = null;
     noImg.hidden = false;
+    noImg.style.display = '';
   }
   badge.hidden = !unavailable;
 
