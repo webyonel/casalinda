@@ -342,24 +342,32 @@
   display: flex;
   flex-direction: column;
 }
+
+@media (max-width: 600px) { 
+  .card-body {
+    padding: 10px 12px 12px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
 .card-cat {
   font-size: 11px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--c-gold-dark);
   font-weight: 600;
-  margin-bottom: 8px;
 }
 .card-title {
   font-family: var(--f-serif);
   font-size: 19px;
   font-weight: 500;
-  margin-bottom: 8px;
   color: var(--c-ink);
 }
 .card-price {
   font-family: var(--f-serif);
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 600;
   color: var(--c-primary);
   margin-bottom: 16px;
