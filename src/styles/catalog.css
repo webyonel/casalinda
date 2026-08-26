@@ -772,6 +772,10 @@
 
 /* ---------- Toast (catálogo: esquina, no centrado) ---------- */
 .toast {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: fixed;
   bottom: 100px;
   left: 50%;
