@@ -80,7 +80,7 @@ const showToast = (message: string, type: '' | 'error' | 'success' = '') => {
 /* ---------- Estado ---------- */
 const state = {
   products: [] as ProductVM[],
-  selected: new Map<string, ProductVM>(), // id -> product
+  selected: new Map<string, { product: ProductVM; qty: number }>(), // id -> { product, qty }
   activeCategory: 'todo',
   searchQuery: '',
 };
@@ -182,7 +182,7 @@ function fillCard(card: HTMLElement, p: ProductVM): void {
     actionBtn.disabled = false;
     actionBtn.removeAttribute('aria-disabled');
     actionBtn.setAttribute('data-action', isSelected ? 'remove' : 'add');
-    setText(actionLabel, isSelected ? 'Seleccionado' : 'Agregar al pedido');
+    setText(actionLabel, isSelected ? 'En el pedido' : 'Agregar al pedido');
   }
 }
 
@@ -253,7 +253,7 @@ function renderDrawer(): void {
   }
 
   body.replaceChildren();
-  items.forEach((p) => {
+  items.forEach(({ product: p, qty }) => {
     const item = document.createElement('div');
     item.className = 'drawer-item';
 
@@ -271,13 +271,52 @@ function renderDrawer(): void {
 
     const info = document.createElement('div');
     info.className = 'drawer-info';
+
     const name = document.createElement('p');
     name.className = 'name';
     setText(name, p.nombre);
+    const qtyTag = document.createElement('span');
+    qtyTag.className = 'drawer-qty-tag';
+    setText(qtyTag, `(${qty})`);
+    name.appendChild(qtyTag);
+
     const price = document.createElement('p');
     price.className = 'price';
-    setText(price, formatPrice(p.precio));
-    info.append(name, price);
+    setText(price, formatPrice(p.precio * qty));
+
+    // Stepper (− qty +)
+    const stepper = document.createElement('div');
+    stepper.className = 'qty-stepper';
+    stepper.setAttribute('role', 'group');
+    stepper.setAttribute('aria-label', `Cantidad de ${p.nombre}`);
+
+    const dec = document.createElement('button');
+    dec.type = 'button';
+    dec.setAttribute('data-step', 'dec');
+    dec.setAttribute('data-id', p.id);
+    dec.setAttribute('aria-label', 'Restar una unidad');
+    if (qty <= 1) {
+      dec.disabled = true;
+      dec.setAttribute('aria-disabled', 'true');
+    }
+    dec.innerHTML =
+      '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>';
+
+    const value = document.createElement('span');
+    value.className = 'qty-value';
+    value.setAttribute('aria-live', 'polite');
+    setText(value, String(qty));
+
+    const inc = document.createElement('button');
+    inc.type = 'button';
+    inc.setAttribute('data-step', 'inc');
+    inc.setAttribute('data-id', p.id);
+    inc.setAttribute('aria-label', 'Sumar una unidad');
+    inc.innerHTML =
+      '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>';
+
+    stepper.append(dec, value, inc);
+    info.append(name, price, stepper);
 
     const remove = document.createElement('button');
     remove.className = 'drawer-remove';
@@ -291,7 +330,7 @@ function renderDrawer(): void {
     body.appendChild(item);
   });
 
-  const totalAmount = items.reduce((s, p) => s + p.precio, 0);
+  const totalAmount = items.reduce((s, entry) => s + entry.product.precio * entry.qty, 0);
   setText(total, formatPrice(totalAmount));
   if (goBtn) {
     goBtn.disabled = false;
@@ -305,22 +344,23 @@ function renderCheckoutSummary(): void {
   const wrap = $('#checkoutSummary');
   if (!wrap) return;
   const items = Array.from(state.selected.values());
-  const total = items.reduce((s, p) => s + p.precio, 0);
+  const totalUnits = items.reduce((s, entry) => s + entry.qty, 0);
+  const total = items.reduce((s, entry) => s + entry.product.precio * entry.qty, 0);
 
   wrap.replaceChildren();
   const h4 = document.createElement('h4');
   setText(
     h4,
-    `Tu pedido (${items.length} ${items.length === 1 ? 'producto' : 'productos'})`,
+    `Tu pedido (${totalUnits} ${totalUnits === 1 ? 'unidad' : 'unidades'})`,
   );
 
   const ul = document.createElement('ul');
-  items.forEach((p) => {
+  items.forEach(({ product: p, qty }) => {
     const li = document.createElement('li');
     const left = document.createElement('span');
-    setText(left, p.nombre);
+    setText(left, `${p.nombre} (${qty})`);
     const right = document.createElement('strong');
-    setText(right, formatPrice(p.precio));
+    setText(right, formatPrice(p.precio * qty));
     li.append(left, right);
     ul.appendChild(li);
   });
@@ -338,12 +378,15 @@ function renderCheckoutSummary(): void {
 
 /* ---------- FAB count ---------- */
 function updateFab(): void {
-  const count = state.selected.size;
+  const totalUnits = Array.from(state.selected.values()).reduce(
+    (s, entry) => s + entry.qty,
+    0,
+  );
   const fab = $('#fab') as HTMLElement | null;
   const fabCount = $('#fabCount');
   if (!fab) return;
-  setText(fabCount, String(count));
-  fab.hidden = count === 0;
+  setText(fabCount, String(totalUnits));
+  fab.hidden = totalUnits === 0;
 }
 
 /* ---------- Drawer / Modal ---------- */
@@ -431,7 +474,10 @@ function buildWhatsAppMessage(data: {
   direccion: string;
 }): string {
   const items = Array.from(state.selected.values());
-  const total = items.reduce((s, p) => s + p.precio, 0);
+  const total = items.reduce(
+    (s, entry) => s + entry.product.precio * entry.qty,
+    0,
+  );
 
   const lines: string[] = [
     '¡Hola Casa Linda! 🏠',
@@ -439,8 +485,8 @@ function buildWhatsAppMessage(data: {
     'Quisiera confirmar el siguiente pedido:',
     '',
   ];
-  items.forEach((p, i) => {
-    lines.push(`${i + 1}. ${p.nombre} — ${formatPrice(p.precio)}`);
+  items.forEach(({ product: p, qty }, i) => {
+    lines.push(`${i + 1}. ${p.nombre} (${qty}) — ${formatPrice(p.precio * qty)}`);
   });
   lines.push('');
   lines.push(`*Total estimado:* ${formatPrice(total)}`);
@@ -481,7 +527,7 @@ function onGridClick(e: Event): void {
     return;
   }
   if (action === 'add') {
-    state.selected.set(id, product);
+    state.selected.set(id, { product, qty: 1 });
     showToast(`${product.nombre} agregado`, 'success');
   } else if (action === 'remove') {
     state.selected.delete(id);
@@ -493,6 +539,25 @@ function onGridClick(e: Event): void {
 
 function onDrawerClick(e: Event): void {
   const target = e.target as HTMLElement;
+
+  const stepBtn = target.closest('[data-step]') as HTMLElement | null;
+  if (stepBtn) {
+    const id = stepBtn.dataset.id;
+    const step = stepBtn.dataset.step;
+    if (!id || !step) return;
+    const entry = state.selected.get(id);
+    if (!entry) return;
+    if (step === 'inc') {
+      entry.qty += 1;
+    } else if (step === 'dec') {
+      entry.qty = Math.max(1, entry.qty - 1);
+    }
+    state.selected.set(id, entry);
+    renderDrawer();
+    updateFab();
+    return;
+  }
+
   const removeBtn = target.closest('[data-remove]') as HTMLElement | null;
   if (!removeBtn) return;
   const id = removeBtn.dataset.remove;
