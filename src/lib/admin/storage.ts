@@ -5,6 +5,11 @@ const BUCKET = 'productos';
 const MAX_BYTES = 5 * 1024 * 1024; // 5 MB
 const ALLOWED_MIME = ['image/png', 'image/jpeg', 'image/webp', 'image/gif'];
 
+/** Compresión client-side antes de subir. */
+const MAX_DIMENSION = 1280; // px del lado más largo
+const JPEG_QUALITY = 0.7;
+const SKIP_COMPRESS_BYTES = 250 * 1024; // ya está bajo, no tocarla
+
 /** Genera un id corto estilo nanoid (suficiente para evitar colisiones). */
 function shortId(): string {
   return Math.random().toString(36).slice(2, 8) + Date.now().toString(36).slice(-4);
@@ -35,7 +40,54 @@ export function validateImage(file: File): string | null {
 }
 
 /**
+ * Re-encodea la imagen en el navegador para reducir tamaño antes de subir.
+ * - GIFs: se devuelven tal cual (canvas pierde la animación).
+ * - Archivos ya pequeños (<= SKIP_COMPRESS_BYTES): sin cambios.
+ * - Resto: máx 1280 px del lado largo + JPEG calidad 0.7.
+ * Si algo falla, devuelve el archivo original (best-effort).
+ */
+async function compressImageForUpload(file: File): Promise<File> {
+  if (file.type === 'image/gif') return file;
+  if (file.size <= SKIP_COMPRESS_BYTES) return file;
+  if (typeof createImageBitmap === 'undefined' || typeof document === 'undefined') {
+    return file;
+  }
+
+  try {
+    const bitmap = await createImageBitmap(file);
+    const { width, height } = bitmap;
+    const longest = Math.max(width, height);
+    const scale = longest > MAX_DIMENSION ? MAX_DIMENSION / longest : 1;
+    const w = Math.max(1, Math.round(width * scale));
+    const h = Math.max(1, Math.round(height * scale));
+
+    const canvas = document.createElement('canvas');
+    canvas.width = w;
+    canvas.height = h;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return file;
+    ctx.drawImage(bitmap, 0, 0, w, h);
+    bitmap.close?.();
+
+    const blob = await new Promise<Blob | null>((resolve) =>
+      canvas.toBlob(resolve, 'image/jpeg', JPEG_QUALITY),
+    );
+    if (!blob || blob.size >= file.size) return file;
+
+    const baseName = file.name.replace(/\.[^.]+$/, '') || 'imagen';
+    return new File([blob], `${baseName}.jpg`, {
+      type: 'image/jpeg',
+      lastModified: Date.now(),
+    });
+  } catch (err) {
+    console.warn('[storage] compressImageForUpload falló, subiendo original:', err);
+    return file;
+  }
+}
+
+/**
  * Sube un único archivo al bucket de productos bajo `${productId}/`.
+ * Antes de subir, re-encodea la imagen en el navegador para reducir tamaño.
  * Devuelve la URL pública.
  */
 export async function uploadProductImage(
@@ -45,14 +97,18 @@ export async function uploadProductImage(
   const err = validateImage(file);
   if (err) return { ok: false, error: err };
 
-  const ext = extensionFromFile(file);
+  const toUpload = await compressImageForUpload(file);
+
+  const ext = extensionFromFile(toUpload);
   const path = `${productId}/${shortId()}.${ext}`;
 
-  const { error: upErr } = await supabase.storage.from(BUCKET).upload(path, file, {
-    cacheControl: '3600',
-    upsert: false,
-    contentType: file.type,
-  });
+  const { error: upErr } = await supabase.storage
+    .from(BUCKET)
+    .upload(path, toUpload, {
+      cacheControl: '3600',
+      upsert: false,
+      contentType: toUpload.type,
+    });
   if (upErr) {
     return { ok: false, error: `Error subiendo imagen: ${upErr.message}` };
   }
